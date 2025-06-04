@@ -82,7 +82,7 @@ A full-stack social networking application built with **Spring Boot (modular-mon
 
 ## 🧱 Architecture
 
-> **Modular-Monolith** using [Spring Modulith](https://docs.spring.io/spring-modulith/)
+> **Modular-Monolith** using [Spring Modulith](https://spring.io/projects/spring-modulith)
 
 - Each domain (auth, post, user, chat...) is a standalone module.
 - Clean separation with `@ApplicationModule` in `package-info.java`.
