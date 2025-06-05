@@ -68,7 +68,7 @@ A full-stack social networking application built with **Spring Boot (modular-mon
 
 | Layer       | Technology |
 |-------------|------------|
-| Backend     | Spring Boot, Spring Security, Spring Web, Spring Data JPA, Spring Data MongoDB |
+| Backend     | Spring Boot, Spring Security, Spring Web, Spring Data JPA, Spring Modulith|
 | Frontend    | ReactJS, TailwindCSS |
 | Auth        | JWT, OAuth2 |
 | Database    | MySQL (relational), MongoDB (NoSQL) |
