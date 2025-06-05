@@ -1,4 +1,4 @@
-package com.ntd.socialnetwork.user;
+package com.ntd.socialnetwork.user.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -18,9 +18,9 @@ import java.time.Instant;
 @AllArgsConstructor
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id", nullable = false)
-    private int id;
+    private String id;
 
     @Size(max = 45, message = "Username không được quá 45 ký tự!")
     @NotBlank(message = "Không được bỏ trống mục này!")
