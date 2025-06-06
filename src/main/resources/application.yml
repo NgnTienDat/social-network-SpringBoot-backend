@@ -1,0 +1,21 @@
+server:
+  port: 8080
+
+
+spring:
+  application:
+    name: social-network
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/socialnetworkdb
+    username: root
+    password: tiendatmySQL964@
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+auth:
+  signer-key: x5KojnwOLoK3yG6ls+Shl6Lt24ngoKsrnA1lWAhf/pNWxUAkvlGof7hDp75A7oUh

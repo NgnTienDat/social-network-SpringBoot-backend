@@ -1,4 +1,4 @@
-package com.ntd.socialnetwork.auth.dto.response;
+package com.ntd.socialnetwork.auth.dto.request;
 
 
 import lombok.*;
@@ -10,7 +10,6 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Builder
-public class AuthenticationResponse {
-    boolean isAuthenticated;
+public class IntrospectRequest {
     String token;
 }
