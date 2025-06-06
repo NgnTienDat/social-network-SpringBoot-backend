@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-@ControllerAdvice(basePackages = {"com.ntd.socialnetwork.user", "com.ntd.socialnetwork.auth"})
+@ControllerAdvice(basePackages = "com.ntd.socialnetwork.user")
 public class UserExceptionHandler {
 
     @ExceptionHandler(Exception.class)
