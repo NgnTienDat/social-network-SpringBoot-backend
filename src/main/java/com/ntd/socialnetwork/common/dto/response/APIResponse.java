@@ -1,4 +1,4 @@
-package com.ntd.socialnetwork.user.dto.response;
+package com.ntd.socialnetwork.common.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

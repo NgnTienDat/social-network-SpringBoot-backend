@@ -1,4 +1,4 @@
-package com.ntd.socialnetwork.auth;
+package com.ntd.socialnetwork.auth.service;
 
 import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.MACSigner;
@@ -11,6 +11,7 @@ import com.ntd.socialnetwork.auth.dto.response.AuthenticationResponse;
 import com.ntd.socialnetwork.auth.dto.response.IntrospectResponse;
 import com.ntd.socialnetwork.auth.exception.AuthErrorCode;
 import com.ntd.socialnetwork.auth.exception.AuthException;
+import com.ntd.socialnetwork.auth.repository.AuthenticationRepository;
 import com.ntd.socialnetwork.user.model.User;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;

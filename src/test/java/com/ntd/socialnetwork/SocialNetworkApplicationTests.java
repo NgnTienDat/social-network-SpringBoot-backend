@@ -10,7 +10,10 @@ class SocialNetworkApplicationTests {
 	@Test
 	void contextLoads() {
 		ApplicationModules modules = ApplicationModules.of(SocialNetworkApplication.class);
-		modules.forEach(System.out::println);
+		modules.verify();
+//		modules.forEach(System.out::println);
+
+
 	}
 
 }
