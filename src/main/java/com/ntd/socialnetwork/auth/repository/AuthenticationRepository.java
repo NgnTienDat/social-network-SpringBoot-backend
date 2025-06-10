@@ -1,4 +1,4 @@
-package com.ntd.socialnetwork.auth;
+package com.ntd.socialnetwork.auth.repository;
 
 import com.ntd.socialnetwork.user.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,13 +1,13 @@
-package com.ntd.socialnetwork.auth;
+package com.ntd.socialnetwork.auth.controller;
 
 
 import com.nimbusds.jose.JOSEException;
+import com.ntd.socialnetwork.auth.service.AuthenticationService;
 import com.ntd.socialnetwork.auth.dto.request.AuthenticationRequest;
 import com.ntd.socialnetwork.auth.dto.request.IntrospectRequest;
 import com.ntd.socialnetwork.auth.dto.response.AuthenticationResponse;
 import com.ntd.socialnetwork.auth.dto.response.IntrospectResponse;
-import com.ntd.socialnetwork.user.dto.response.APIResponse;
-import com.ntd.socialnetwork.user.dto.response.UserResponse;
+import com.ntd.socialnetwork.common.dto.response.APIResponse;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;

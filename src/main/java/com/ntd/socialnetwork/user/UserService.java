@@ -3,6 +3,7 @@ package com.ntd.socialnetwork.user;
 import com.ntd.socialnetwork.user.dto.request.UserCreationRequest;
 import com.ntd.socialnetwork.user.dto.request.UserUpdateRequest;
 import com.ntd.socialnetwork.user.dto.response.UserResponse;
+import com.ntd.socialnetwork.user.enums.Role;
 import com.ntd.socialnetwork.user.exception.ErrorCode;
 import com.ntd.socialnetwork.user.exception.UserNotFoundException;
 import com.ntd.socialnetwork.user.exception.UsernameAlreadyExistsException;
@@ -11,21 +12,24 @@ import com.ntd.socialnetwork.user.model.User;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class UserService {
 
     UserRepository userRepository;
     UserMapper userMapper;
+    PasswordEncoder passwordEncoder;
 
     public void createUser(UserCreationRequest userCreationRequest) {
 
@@ -34,14 +38,19 @@ public class UserService {
         }
 
         User user = userMapper.toUser(userCreationRequest);
-        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
         user.setPassword(passwordEncoder.encode(userCreationRequest.getPassword()));
+
+        HashSet<String> roles = new HashSet<>();
+        roles.add(Role.USER.name());
+        user.setRoles(roles);
 
         userRepository.save(user);
     }
 
     public void updateUser(UserUpdateRequest userUpdateRequest) {
+
         User user = this.userRepository.findByUsername(userUpdateRequest.getUsername());
+
         if (user == null) {
             throw new UserNotFoundException(ErrorCode.USER_NOTFOUND);
         }
@@ -54,9 +63,18 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public UserResponse getUserByUsername(String id) {
+    public UserResponse getUserById(String id) {
         return userMapper.toUserResponse(userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException(ErrorCode.USER_NOTFOUND)));
     }
 
+    public User getUserByUsername(String username) {
+         User user = this.userRepository.findByUsername(username);
+
+         return user;
+    }
+
+    public void saveUser(User user) {
+        userRepository.save(user);
+    }
 }

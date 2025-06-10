@@ -1,6 +1,6 @@
 package com.ntd.socialnetwork.user.exception;
 
-import com.ntd.socialnetwork.user.dto.response.APIResponse;
+import com.ntd.socialnetwork.common.dto.response.APIResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;

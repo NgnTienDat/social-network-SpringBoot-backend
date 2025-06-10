@@ -2,7 +2,7 @@ package com.ntd.socialnetwork.user;
 
 import com.ntd.socialnetwork.user.dto.request.UserCreationRequest;
 import com.ntd.socialnetwork.user.dto.request.UserUpdateRequest;
-import com.ntd.socialnetwork.user.dto.response.APIResponse;
+import com.ntd.socialnetwork.common.dto.response.APIResponse;
 import com.ntd.socialnetwork.user.dto.response.UserResponse;
 import com.ntd.socialnetwork.user.model.User;
 import jakarta.validation.Valid;
@@ -67,7 +67,7 @@ public class UserController {
 
     @GetMapping("/users/{id}")
     public ResponseEntity<APIResponse<UserResponse>> getUsers(@PathVariable(value = "id") String id) {
-        UserResponse user = this.userService.getUserByUsername(id);
+        UserResponse user = this.userService.getUserById(id);
 
         APIResponse<UserResponse> response = new APIResponse<>(
                 true,

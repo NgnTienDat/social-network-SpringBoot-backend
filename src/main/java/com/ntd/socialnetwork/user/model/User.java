@@ -1,14 +1,15 @@
 package com.ntd.socialnetwork.user.model;
 
+import com.ntd.socialnetwork.user.enums.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "user")
@@ -16,42 +17,49 @@ import java.time.Instant;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@Builder
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id", nullable = false)
-    private String id;
+    String id;
 
     @Size(max = 45, message = "Username không được quá 45 ký tự!")
     @NotBlank(message = "Không được bỏ trống mục này!")
     @Column(name = "username", nullable = false, length = 45)
-    private String username;
+    String username;
 
     @Size(max = 255, min = 3, message = "Mật khẩu tối thiểu 3 và tối đa 16 ký tự!")
     @NotBlank(message = "Không được bỏ trống mục này!")
     @Column(name = "password", nullable = false, length = 255)
-    private String password;
+    String password;
 
     @Column(name = "firstname", nullable = false, length = 45)
-    private String firstname;
+    String firstname;
 
     @Column(name = "lastname", nullable = false, length = 45)
-    private String lastname;
+    String lastname;
 
     @Column(name = "email", nullable = false, length = 45)
-    private String email;
+    String email;
 
     @Column(name = "phone", nullable = false, length = 11)
-    private String phone;
+    String phone;
 
     @Column(name = "gender")
-    private Byte gender;
+    Byte gender;
 
     @Column(name = "avatar")
-    private String avatar;
+    String avatar;
 
     @Column(name = "date_of_birth")
-    private Instant dateOfBirth;
+    Instant dateOfBirth;
+
+    @Column(name = "role", length = 100)
+    Set<String> roles;
+
+
 
 
 }
