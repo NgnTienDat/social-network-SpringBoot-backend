@@ -9,7 +9,6 @@ import com.ntd.socialnetwork.auth.dto.response.AuthenticationResponse;
 import com.ntd.socialnetwork.auth.dto.response.IntrospectResponse;
 import com.ntd.socialnetwork.common.dto.response.APIResponse;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.HttpStatus;
@@ -22,14 +21,14 @@ import org.springframework.web.client.RestClient;
 
 import java.text.ParseException;
 
-@Builder
+
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class AuthenticationController {
     AuthenticationService authenticationService;
-    private final RestClient.Builder builder;
+
 
     // login
     @PostMapping("/token")

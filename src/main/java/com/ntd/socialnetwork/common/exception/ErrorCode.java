@@ -1,4 +1,4 @@
-package com.ntd.socialnetwork.user.exception;
+package com.ntd.socialnetwork.common.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
