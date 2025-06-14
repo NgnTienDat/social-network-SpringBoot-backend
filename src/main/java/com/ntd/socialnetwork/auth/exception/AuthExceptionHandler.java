@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.nio.file.AccessDeniedException;
+
 @ControllerAdvice(basePackages = "com.ntd.socialnetwork.auth")
 public class AuthExceptionHandler {
 
@@ -33,6 +35,20 @@ public class AuthExceptionHandler {
                 errorCode.getCode()
         );
 
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        return ResponseEntity.status(errorCode.getHttpStatusCode()).body(response);
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<AuthAPIResponse<Void>> handleAccessDeniedException(AccessDeniedException exception) {
+
+        AuthErrorCode errorCode = AuthErrorCode.UNAUTHORIZED;
+        AuthAPIResponse<Void> response = new AuthAPIResponse<>(
+                false,
+                errorCode.getMessage(),
+                null,
+                errorCode.getCode()
+        );
+
+        return ResponseEntity.status(errorCode.getHttpStatusCode()).body(response);
     }
 }

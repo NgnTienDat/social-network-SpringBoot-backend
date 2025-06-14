@@ -1,25 +1,25 @@
 package com.ntd.socialnetwork.user;
 
+import com.ntd.socialnetwork.common.exception.AppException;
 import com.ntd.socialnetwork.user.dto.request.UserCreationRequest;
 import com.ntd.socialnetwork.user.dto.request.UserUpdateRequest;
 import com.ntd.socialnetwork.user.dto.response.UserResponse;
 import com.ntd.socialnetwork.user.enums.Role;
-import com.ntd.socialnetwork.user.exception.ErrorCode;
-import com.ntd.socialnetwork.user.exception.UserNotFoundException;
-import com.ntd.socialnetwork.user.exception.UsernameAlreadyExistsException;
+import com.ntd.socialnetwork.common.exception.ErrorCode;
 import com.ntd.socialnetwork.user.mapper.UserMapper;
 import com.ntd.socialnetwork.user.model.User;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -34,7 +34,7 @@ public class UserService {
     public void createUser(UserCreationRequest userCreationRequest) {
 
         if (this.userRepository.existsUserByUsername(userCreationRequest.getUsername())) {
-            throw new UsernameAlreadyExistsException(ErrorCode.USER_ALREADY_EXISTS);
+            throw new AppException(ErrorCode.USER_ALREADY_EXISTS);
         }
 
         User user = userMapper.toUser(userCreationRequest);
@@ -49,27 +49,39 @@ public class UserService {
 
     public void updateUser(UserUpdateRequest userUpdateRequest) {
 
-        User user = this.userRepository.findByUsername(userUpdateRequest.getUsername());
+        User user = this.userRepository.findByUsername(userUpdateRequest.getUsername())
+                        .orElseThrow(() -> new AppException(ErrorCode.USER_NOTFOUND));
 
-        if (user == null) {
-            throw new UserNotFoundException(ErrorCode.USER_NOTFOUND);
-        }
+
 
         userMapper.updateUser(user, userUpdateRequest);
         userRepository.save(user);
     }
 
-    public List<User> findAll() {
-        return userRepository.findAll();
+    public UserResponse getMyInfo() {
+        var context = SecurityContextHolder.getContext();
+        String name = context.getAuthentication().getName();
+        User user = this.userRepository.findByUsername(name)
+                .orElseThrow(() -> new AppException(ErrorCode.USER_NOTFOUND));
+        return userMapper.toUserResponse(user);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
+    public List<UserResponse> findAll() {
+        return userRepository.findAll()
+                .stream().map(userMapper::toUserResponse).toList();
+    }
+
+    @PostAuthorize("returnObject.username == authentication.name")
     public UserResponse getUserById(String id) {
         return userMapper.toUserResponse(userRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException(ErrorCode.USER_NOTFOUND)));
+                .orElseThrow(() -> new AppException(ErrorCode.USER_NOTFOUND)));
     }
 
+    // using for AppInit
     public User getUserByUsername(String username) {
-         User user = this.userRepository.findByUsername(username);
+         User user = this.userRepository.findByUsername(username)
+                 .orElseThrow(() -> new AppException(ErrorCode.USER_NOTFOUND));
 
          return user;
     }

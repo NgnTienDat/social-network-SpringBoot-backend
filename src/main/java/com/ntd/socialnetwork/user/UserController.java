@@ -4,17 +4,19 @@ import com.ntd.socialnetwork.user.dto.request.UserCreationRequest;
 import com.ntd.socialnetwork.user.dto.request.UserUpdateRequest;
 import com.ntd.socialnetwork.common.dto.response.APIResponse;
 import com.ntd.socialnetwork.user.dto.response.UserResponse;
-import com.ntd.socialnetwork.user.model.User;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
@@ -24,7 +26,8 @@ public class UserController {
     UserService userService;
 
     @PostMapping("/users")
-    public ResponseEntity<APIResponse<Void>> createUser(@RequestBody @Valid UserCreationRequest userCreationRequest) {
+    public ResponseEntity<APIResponse<Void>> createUser(
+            @RequestBody @Valid UserCreationRequest userCreationRequest) {
         this.userService.createUser(userCreationRequest);
 
         APIResponse<Void> response = new APIResponse<>(
@@ -52,10 +55,19 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    public ResponseEntity<APIResponse<List<User>>> getAllUsers() {
-        List<User> users = this.userService.findAll();
+    public ResponseEntity<APIResponse<List<UserResponse>>> getAllUsers() {
+        List<UserResponse> users = this.userService.findAll();
 
-        APIResponse<List<User>> response = new APIResponse<>(
+        var authentication = SecurityContextHolder.getContext().getAuthentication();
+        log.info("Username: {}", authentication.getName());
+        authentication.getAuthorities().forEach(grantedAuthority -> {
+            log.info("Roles: {}", grantedAuthority.getAuthority());
+        });
+
+
+
+
+        APIResponse<List<UserResponse>> response = new APIResponse<>(
                 true,
                 "Fetched all users",
                 users,
@@ -77,5 +89,15 @@ public class UserController {
         );
 
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/users/myInfo")
+    APIResponse<Object> getMyInfo() {
+        return APIResponse.builder()
+                .success(true)
+                .message("My Information")
+                .data(this.userService.getMyInfo())
+                .code(HttpStatus.OK.value())
+                .build();
     }
 }
