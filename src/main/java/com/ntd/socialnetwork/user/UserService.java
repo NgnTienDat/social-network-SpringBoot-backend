@@ -89,4 +89,8 @@ public class UserService {
     public void saveUser(User user) {
         userRepository.save(user);
     }
+
+    public User findUserById(String id) {
+        return this.findUserById(id);
+    }
 }

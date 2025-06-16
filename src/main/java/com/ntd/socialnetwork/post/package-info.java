@@ -1,4 +1,5 @@
-@ApplicationModule(allowedDependencies = {"user", "user :: model", "common :: response", "common :: exception"})
+@ApplicationModule(allowedDependencies = {"user", "user :: model", "common :: response", "common :: exception",
+        "user :: response"})
 package com.ntd.socialnetwork.post;
 
 import org.springframework.modulith.ApplicationModule;

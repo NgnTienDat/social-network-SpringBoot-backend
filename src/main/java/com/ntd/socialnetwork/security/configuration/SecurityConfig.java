@@ -27,9 +27,13 @@ import javax.crypto.spec.SecretKeySpec;
 @EnableMethodSecurity
 public class SecurityConfig {
 
-    private final String[] PUBLIC_ENDPOINTS = {
+    private final String[] PUBLIC_ENDPOINTS_POST = {
             "/auth/token", "/auth/introspect",
             "/api/users"
+    };
+
+    private final String[] PUBLIC_ENDPOINTS_GET = {
+            "/api/posts"
     };
 
     @Value("${auth.signer-key}")
@@ -38,7 +42,8 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeHttpRequests(request ->
-                request.requestMatchers(HttpMethod.POST, "/api/users").permitAll()
+                request.requestMatchers(HttpMethod.POST, PUBLIC_ENDPOINTS_POST).permitAll()
+                        .requestMatchers(HttpMethod.GET, PUBLIC_ENDPOINTS_GET).permitAll()
 
                         .anyRequest().authenticated()
         );

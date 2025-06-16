@@ -1,6 +1,7 @@
 package com.ntd.socialnetwork.post.mapper;
 
 import com.ntd.socialnetwork.post.dto.request.PostCreationRequest;
+import com.ntd.socialnetwork.post.dto.response.PostResponse;
 import com.ntd.socialnetwork.post.model.Post;
 import org.mapstruct.Mapper;
 
@@ -8,4 +9,5 @@ import org.mapstruct.Mapper;
 public interface PostMapper {
 
     Post toPost(PostCreationRequest postCreationRequest);
+    PostResponse toPostResponse(Post post);
 }

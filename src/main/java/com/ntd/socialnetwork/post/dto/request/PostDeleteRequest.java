@@ -1,5 +1,6 @@
 package com.ntd.socialnetwork.post.dto.request;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -9,9 +10,8 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Builder
-public class PostCreationRequest {
-
-    String content;
-    String image;
-
+public class PostDeleteRequest {
+    @NotBlank
+    String id;
+    String username;
 }
