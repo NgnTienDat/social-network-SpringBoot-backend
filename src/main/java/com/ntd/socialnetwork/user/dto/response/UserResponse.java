@@ -1,5 +1,6 @@
 package com.ntd.socialnetwork.user.dto.response;
 
+import com.ntd.socialnetwork.user.model.Role;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -20,6 +21,6 @@ public class UserResponse {
     Byte gender;
     String avatar;
     Instant dateOfBirth;
-    Set<String> roles;
+    Set<RoleResponse> roles;
 
 }

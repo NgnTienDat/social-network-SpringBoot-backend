@@ -1,8 +1,6 @@
-package com.ntd.socialnetwork.user;
+package com.ntd.socialnetwork.user.repository;
 
 import com.ntd.socialnetwork.user.model.User;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

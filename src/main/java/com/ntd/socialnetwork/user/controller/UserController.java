@@ -1,9 +1,10 @@
-package com.ntd.socialnetwork.user;
+package com.ntd.socialnetwork.user.controller;
 
 import com.ntd.socialnetwork.user.dto.request.UserCreationRequest;
 import com.ntd.socialnetwork.user.dto.request.UserUpdateRequest;
 import com.ntd.socialnetwork.common.dto.response.APIResponse;
 import com.ntd.socialnetwork.user.dto.response.UserResponse;
+import com.ntd.socialnetwork.user.service.UserService;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
