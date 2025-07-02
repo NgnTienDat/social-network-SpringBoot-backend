@@ -1,10 +1,12 @@
 package com.ntd.socialnetwork.user.dto.request;
 
+import com.ntd.socialnetwork.common.validator.DobConstraint;
 import jakarta.validation.constraints.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.Instant;
+import java.util.List;
 
 @Getter
 @Setter
@@ -13,7 +15,7 @@ import java.time.Instant;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Builder
 public class UserUpdateRequest {
-    @Size(max = 20, min = 8, message = "USERNAME_INVLID")
+//    @Size(max = 20, min = 8, message = "USERNAME_INVALID")
 //    @NotBlank(message = "NOT_BLANk")
     String username;
 
@@ -49,6 +51,8 @@ public class UserUpdateRequest {
     @Size(max = 255, message = "Đường dẫn avatar không được quá 255 ký tự!")
     String avatar;
 
+    @DobConstraint(min = 16, message = "INVALID_DOB")
     @Past(message = "Ngày sinh phải là ngày trong quá khứ!")
     Instant dateOfBirth;
+    List<String> roles;
 }

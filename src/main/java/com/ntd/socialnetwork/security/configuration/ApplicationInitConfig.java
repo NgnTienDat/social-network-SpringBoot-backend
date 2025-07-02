@@ -1,14 +1,12 @@
 package com.ntd.socialnetwork.security.configuration;
 
-import com.ntd.socialnetwork.user.UserRepository;
-import com.ntd.socialnetwork.user.UserService;
+import com.ntd.socialnetwork.user.service.UserService;
 import com.ntd.socialnetwork.user.enums.Role;
 import com.ntd.socialnetwork.user.model.User;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -37,7 +35,7 @@ public class ApplicationInitConfig {
                 User user = User.builder()
                         .username("admin")
                         .password(passwordEncoder.encode("admin"))
-                        .roles(roles)
+//                        .roles(roles)
                         .email("admin@gmail.com")
                         .firstname("System")
                         .lastname("Admin")

@@ -12,7 +12,7 @@ import java.nio.file.AccessDeniedException;
 @ControllerAdvice(basePackages = "com.ntd.socialnetwork.auth")
 public class AuthExceptionHandler {
 
-    @ExceptionHandler(Exception.class)
+    @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<AuthAPIResponse<Void>> handleRuntimeException(RuntimeException ex) {
 
         AuthAPIResponse<Void> response = new AuthAPIResponse<>(

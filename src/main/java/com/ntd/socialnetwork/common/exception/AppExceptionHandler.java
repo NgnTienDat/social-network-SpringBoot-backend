@@ -18,7 +18,7 @@ import java.util.Map;
 @ControllerAdvice(basePackages = "com.ntd.socialnetwork")
 public class AppExceptionHandler {
 
-    @ExceptionHandler(Exception.class)
+    @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<APIResponse<Void>> handleRuntimeException(RuntimeException ex) {
         log.error("App Exception: ", ex);
         APIResponse<Void> response = new APIResponse<>(
@@ -59,6 +59,7 @@ public class AppExceptionHandler {
             ErrorCode errorCode;
             try {
                 errorCode = ErrorCode.valueOf(key.trim()); // tránh lỗi do khoảng trắng
+
             } catch (IllegalArgumentException | NullPointerException e) {
                 errorCode = ErrorCode.INVALID_MESSAGE_KEY;
             }

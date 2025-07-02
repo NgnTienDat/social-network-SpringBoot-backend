@@ -1,6 +1,5 @@
 package com.ntd.socialnetwork.user.model;
 
-import com.ntd.socialnetwork.user.enums.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -27,7 +26,7 @@ public class User {
 
     @Size(max = 45, message = "Username không được quá 45 ký tự!")
     @NotBlank(message = "Không được bỏ trống mục này!")
-    @Column(name = "username", nullable = false, length = 45)
+    @Column(name = "username", nullable = false, length = 45, unique = true)
     String username;
 
     @Size(max = 255, min = 3, message = "Mật khẩu tối thiểu 3 và tối đa 16 ký tự!")
@@ -56,8 +55,9 @@ public class User {
     @Column(name = "date_of_birth")
     Instant dateOfBirth;
 
-    @Column(name = "role", length = 100)
-    Set<String> roles;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @Column(name = "roles", length = 100)
+    Set<Role> roles;
 
 
 

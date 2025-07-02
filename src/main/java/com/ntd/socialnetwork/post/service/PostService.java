@@ -11,7 +11,7 @@ import com.ntd.socialnetwork.post.exception.PostException;
 import com.ntd.socialnetwork.post.mapper.PostMapper;
 import com.ntd.socialnetwork.post.model.Post;
 import com.ntd.socialnetwork.post.repository.PostRepository;
-import com.ntd.socialnetwork.user.UserService;
+import com.ntd.socialnetwork.user.service.UserService;
 import com.ntd.socialnetwork.user.dto.response.UserResponse;
 import com.ntd.socialnetwork.user.model.User;
 import lombok.AccessLevel;

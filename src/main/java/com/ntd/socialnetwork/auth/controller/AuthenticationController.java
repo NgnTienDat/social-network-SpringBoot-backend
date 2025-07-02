@@ -2,12 +2,15 @@ package com.ntd.socialnetwork.auth.controller;
 
 
 import com.nimbusds.jose.JOSEException;
+import com.ntd.socialnetwork.auth.dto.request.LogoutRequest;
+import com.ntd.socialnetwork.auth.dto.request.RefreshRequest;
 import com.ntd.socialnetwork.auth.service.AuthenticationService;
 import com.ntd.socialnetwork.auth.dto.request.AuthenticationRequest;
 import com.ntd.socialnetwork.auth.dto.request.IntrospectRequest;
 import com.ntd.socialnetwork.auth.dto.response.AuthenticationResponse;
 import com.ntd.socialnetwork.auth.dto.response.IntrospectResponse;
 import com.ntd.socialnetwork.common.dto.response.APIResponse;
+import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -58,6 +61,30 @@ public class AuthenticationController {
         );
 
         return new ResponseEntity<>(response, HttpStatus.OK);
-
     }
+
+    @PostMapping("/logout")
+    public APIResponse<Void> logout(@RequestBody LogoutRequest logoutRequest) throws ParseException, JOSEException {
+        this.authenticationService.logout(logoutRequest);
+        return APIResponse.<Void>builder()
+                .message("Logout")
+                .code(HttpStatus.NO_CONTENT.value())
+                .build();
+    }
+
+
+    @PostMapping("/refresh")
+    public ResponseEntity<APIResponse<AuthenticationResponse>> authenticate(
+            @RequestBody RefreshRequest refreshRequest) throws ParseException, JOSEException {
+        AuthenticationResponse result = authenticationService.refreshToken(refreshRequest);
+        APIResponse<AuthenticationResponse> response = new APIResponse<>(
+                true,
+                "is authenticated",
+                result,
+                HttpStatus.OK.value()
+        );
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
 }
